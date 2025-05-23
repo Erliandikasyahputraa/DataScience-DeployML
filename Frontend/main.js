@@ -4,27 +4,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const hasilPrediksiDiv = document.getElementById('hasil-prediksi');
   const errorMsgDiv = document.getElementById('error-msg');
 
+  // Set teks awal saat DOM siap
+  hasilPrediksiDiv.textContent = 'PROSES: MENUNGGU DATA';
+
   analisisBtn.addEventListener('click', async () => {
     // Kosongkan pesan error dan hasil sebelumnya
-    hasilPrediksiDiv.textContent = '';
-    hasilPrediksiDiv.className = ''; // Hapus kelas warna
+    hasilPrediksiDiv.textContent = ''; // Kosongkan teks hasil
+    hasilPrediksiDiv.className = ''; // Hapus semua kelas warna sebelumnya
     errorMsgDiv.textContent = '';
 
     const teks = teksInput.value.trim(); // Ambil teks dan hapus spasi di awal/akhir
 
     if (!teks) {
-      errorMsgDiv.textContent = 'Mohon masukkan teks untuk dianalisis.';
+      errorMsgDiv.textContent = 'ERROR: MASUKKAN TEKS UNTUK ANALISIS.';
+      hasilPrediksiDiv.textContent = 'PROSES: ERROR INPUT';
+      hasilPrediksiDiv.classList.add('unknown'); // Kelas default error
       return;
     }
 
+    // Tampilkan pesan loading/proses
+    hasilPrediksiDiv.textContent = 'PROSES: MENGANALISIS...';
+    hasilPrediksiDiv.classList.add('unknown'); // Warna default saat loading
+
     // Buat objek data yang akan dikirim ke API Flask
     const dataUntukAPI = {
-      teks: teks // Kunci 'teks' harus sama dengan yang diharapkan di app.py Anda
+      teks: teks
     };
 
     try {
-      // URL API Flask Anda
-      const apiEndpoint = 'http://localhost:5000/sentimen'; // Ganti /prediksi jadi /sentimen
+      // URL API Flask Anda. Saat development lokal, ini adalah 'http://localhost:5000/sentimen'
+      // Saat Anda deploy back-end ke server publik, GANTI URL INI!
+      // Contoh: 'https://nama-aplikasi-anda.herokuapp.com/sentimen' atau 'https://url-cloud-run-anda/sentimen'
+      const apiEndpoint = 'http://localhost:5000/sentimen'; 
 
       const response = await fetch(apiEndpoint, {
         method: 'POST',
@@ -34,28 +45,29 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify(dataUntukAPI),
       });
 
+      // Cek apakah response berhasil (status code 2xx)
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Terjadi kesalahan pada server.');
+        throw new Error(errorData.error || 'SERVER ERROR: RESPON TIDAK VALID.');
       }
 
       const result = await response.json();
       
-      // Tampilkan hasil prediksi
-      hasilPrediksiDiv.textContent = `Sentimen: ${result.prediksi_sentimen_teks}`;
-      
-      // Tambahkan kelas CSS untuk warna sentimen
-      if (result.prediksi_sentimen_teks === 'Positif') {
-        hasilPrediksiDiv.classList.add('positif');
-      } else if (result.prediksi_sentimen_teks === 'Netral') {
-        hasilPrediksiDiv.classList.add('netral');
-      } else if (result.prediksi_sentimen_teks === 'Negatif') {
-        hasilPrediksiDiv.classList.add('negatif');
-      }
+      // Ambil label sentimen langsung dari respons back-end
+      const predictedSentiment = result.prediksi_sentimen; 
 
+      // Tampilkan hasil prediksi
+      hasilPrediksiDiv.textContent = `SENTIMEN: ${predictedSentiment.toUpperCase()}`;
+      
+      // Hapus kelas yang ada dan tambahkan kelas baru sesuai sentimen
+      hasilPrediksiDiv.className = ''; // Reset semua kelas
+      hasilPrediksiDiv.classList.add(predictedSentiment.toLowerCase()); // Tambahkan kelas sesuai nama emosi
+      
     } catch (error) {
-      console.error('Error saat melakukan analisis sentimen:', error);
-      errorMsgDiv.textContent = `Gagal menganalisis sentimen: ${error.message}`;
+      console.error('SERVER ERROR:', error);
+      hasilPrediksiDiv.textContent = 'PROSES: GAGAL ANALISIS'; // Pesan error di hasil
+      hasilPrediksiDiv.className = 'unknown'; // Kelas default untuk error
+      errorMsgDiv.textContent = `ERROR: ${error.message}`; // Pesan error detail
     }
   });
 });

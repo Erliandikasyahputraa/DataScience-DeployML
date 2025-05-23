@@ -3,74 +3,180 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Analisis Sentimen dengan SVM</title>
+    <title>ANALISIS SENTIMEN BETA!</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+      /* Reset dan Global */
       body {
-        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        font-family: 'IBM Plex Mono', 'Roboto Mono', monospace; /* Monospaced for raw feel */
+        background-color: #1a1a1a; /* Dark, industrial background */
+        color: #e0e0e0; /* Light text on dark background */
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        background-color: #f0f0f0;
-        margin: 0;
+        overflow: auto; /* Allow scrolling if content is large */
       }
+
       .container {
-        background-color: white;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #333333; /* Darker, solid block */
+        border: 4px solid #00ff00; /* Stark, contrasting border (electric green) */
+        padding: 40px;
+        box-shadow: 8px 8px 0px #00ff00; /* Offset shadow for brutalist feel */
         text-align: center;
-        max-width: 500px;
+        max-width: 700px;
         width: 90%;
+        box-sizing: border-box;
+        position: relative; /* Untuk positioning elemen internal */
+        margin: 20px; /* Jaga margin agar tidak terlalu mepet */
       }
+
+      /* Heading - Besar, tebal, uppercase */
+      h1 {
+        font-size: 3em;
+        font-weight: 700;
+        color: #ff00ff; /* Electric magenta */
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-bottom: 2px solid #00ffff; /* Underline yang kuat */
+        padding-bottom: 10px;
+        display: inline-block; /* Agar border hanya selebar teks */
+      }
+
+      p {
+        font-size: 1.1em;
+        line-height: 1.6;
+        color: #b0b0b0;
+        margin-bottom: 30px;
+      }
+
+      /* Textarea - Monokrom, batas jelas */
       textarea {
         display: block;
-        width: calc(100% - 20px);
+        width: calc(100% - 24px); /* Penuh tapi dengan border */
         padding: 10px;
-        margin: 10px auto;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        margin: 20px auto;
+        background-color: #0d0d0d; /* Sangat gelap */
+        border: 2px solid #666666; /* Batas abu-abu tegas */
+        color: #e0e0e0;
+        font-family: 'IBM Plex Mono', 'Roboto Mono', monospace;
+        font-size: 1em;
         resize: vertical;
-        min-height: 80px;
+        min-height: 150px;
+        box-sizing: border-box;
+        outline: none; /* Hapus outline default browser */
       }
+      textarea:focus {
+        border-color: #00ffff; /* Aksen warna saat fokus */
+        box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.5); /* Outer glow */
+      }
+
+      /* Button - Blok, kontras tinggi */
       button {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
+        background-color: #ff00ff; /* Electric magenta */
+        color: #000000; /* Teks hitam kontras */
+        padding: 15px 40px;
+        border: 2px solid #00ff00; /* Border hijau kuat */
+        font-size: 1.2em;
+        font-weight: 700;
+        text-transform: uppercase;
         cursor: pointer;
-        font-size: 16px;
-        margin-top: 10px;
-      }
-      button:hover {
-        background-color: #0056b3;
-      }
-      #hasil-prediksi {
+        transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+        box-shadow: 4px 4px 0px #00ffff; /* Offset shadow lagi */
         margin-top: 20px;
-        font-size: 1.5em;
-        font-weight: bold;
-        color: #333;
       }
-      #error-msg {
-        color: red;
-        margin-top: 10px;
+
+      button:hover {
+        background-color: #00ffff; /* Swap warna saat hover */
+        color: #ff00ff;
+        box-shadow: 4px 4px 0px #ff00ff;
       }
-      /* Warna untuk sentimen */
-      .positif { color: #28a745; } /* Hijau */
-      .netral { color: #6c757d; }  /* Abu-abu */
-      .negatif { color: #dc3545; } /* Merah */
+
+      button:active {
+        transform: translate(2px, 2px); /* Efek "klik" yang tegas */
+        box-shadow: 2px 2px 0px #00ff00;
+      }
+
+      /* Result Display - Kontras, batas tegas */
+      #hasil-prediksi {
+        margin-top: 40px;
+        padding: 20px;
+        background-color: #2a2a2a; /* Warna background hasil */
+        border: 2px dashed #999999; /* Border putus-putus atau solid */
+        font-size: 1.8em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        min-height: 50px; /* Minimal tinggi */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        word-break: break-word; /* Pastikan teks panjang tidak keluar box */
+      }
+
+      /* Sentiment Specific Colors (diubah untuk brutalism) */
+      /* Sesuaikan warna ini agar tetap kontras dan "keras" */
+      .happy {
+        color: #00ff00; /* Hijau terang */
+        background-color: #2a2a2a;
+        border-color: #00ff00;
+      }
+      .anger {
+        color: #ff0000; /* Merah menyala */
+        background-color: #2a2a2a;
+        border-color: #ff0000;
+      }
+      .fear {
+        color: #ff6600; /* Oranye gelap */
+        background-color: #2a2a2a;
+        border-color: #ff6600;
+      }
+      .sadness {
+        color: #0000ff; /* Biru terang */
+        background-color: #2a2a2a;
+        border-color: #0000ff;
+      }
+      .love {
+        color: #ffff00; /* Kuning terang */
+        background-color: #2a2a2a;
+        border-color: #ffff00;
+      }
+      .disgust {
+        color: #800080; /* Ungu gelap */
+        background-color: #2a2a2a;
+        border-color: #800080;
+      }
+      .unknown, .neutral {
+        color: #b0b0b0; /* Abu-abu default */
+        background-color: #2a2a2a;
+        border-color: #666666;
+      }
+
+      /* Error Message Styles */
+      .error-message {
+        color: #ff0000; /* Merah terang */
+        margin-top: 15px;
+        font-size: 0.9em;
+        font-style: italic;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Analisis Sentimen Teks</h1>
-      <p>Masukkan teks yang ingin dianalisis sentimennya:</p>
-      <textarea id="teks-input" placeholder="Tuliskan komentar atau ulasan di sini..."></textarea>
+      <h1>ANALISIS SENTIMEN TEKS INDONESIA</h1>
+      <p>ALGORITMA PASSIF-AGRESIV KONEKTIVITAS FLASK-VITE.</p>
+      <p>MASUKKAN DATA UNTUK EVALUASI EMOSI.</p>
+      
+      <textarea id="teks-input" placeholder="TEKS MENTAH DI SINI. CONTOH: FILM INI SANGAT BAGUS."></textarea>
 
-      <button id="analisis-btn">Analisis Sentimen</button>
+      <button id="analisis-btn">ANALISIS DATA</button>
 
-      <div id="hasil-prediksi"></div>
+      <div id="hasil-prediksi">PROSES: MENUNGGU DATA</div>
       <div class="error-message" id="error-msg"></div>
     </div>
     <script type="module" src="/main.js"></script>
