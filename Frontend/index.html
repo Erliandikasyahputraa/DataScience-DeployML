@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analisis Sentimen dengan SVM</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+      }
+      .container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 500px;
+        width: 90%;
+      }
+      textarea {
+        display: block;
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 10px auto;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+        min-height: 80px;
+      }
+      button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      #hasil-prediksi {
+        margin-top: 20px;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #333;
+      }
+      #error-msg {
+        color: red;
+        margin-top: 10px;
+      }
+      /* Warna untuk sentimen */
+      .positif { color: #28a745; } /* Hijau */
+      .netral { color: #6c757d; }  /* Abu-abu */
+      .negatif { color: #dc3545; } /* Merah */
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Analisis Sentimen Teks</h1>
+      <p>Masukkan teks yang ingin dianalisis sentimennya:</p>
+      <textarea id="teks-input" placeholder="Tuliskan komentar atau ulasan di sini..."></textarea>
+
+      <button id="analisis-btn">Analisis Sentimen</button>
+
+      <div id="hasil-prediksi"></div>
+      <div class="error-message" id="error-msg"></div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
