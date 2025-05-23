@@ -11,153 +11,155 @@
         margin: 0;
         padding: 0;
         font-family: 'IBM Plex Mono', 'Roboto Mono', monospace; /* Monospaced for raw feel */
-        background-color: #1a1a1a; /* Dark, industrial background */
-        color: #e0e0e0; /* Light text on dark background */
+        background-color: #FFFFFF; /* Latar belakang putih */
+        color: #000000; /* Teks hitam terang */
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        overflow: auto; /* Allow scrolling if content is large */
+        overflow: auto; /* Izinkan scrolling jika konten melebihi layar */
       }
 
       .container {
-        background-color: #333333; /* Darker, solid block */
-        border: 4px solid #00ff00; /* Stark, contrasting border (electric green) */
+        background-color: #F0F0F0; /* Blok latar belakang abu-abu terang */
+        border: 2px solid #000000; /* Batas hitam tegas */
         padding: 40px;
-        box-shadow: 8px 8px 0px #00ff00; /* Offset shadow for brutalist feel */
+        box-shadow: 8px 8px 0px #666666; /* Shadow abu-abu tegas agar terlihat di background putih */
         text-align: center;
         max-width: 700px;
         width: 90%;
         box-sizing: border-box;
-        position: relative; /* Untuk positioning elemen internal */
-        margin: 20px; /* Jaga margin agar tidak terlalu mepet */
+        position: relative;
+        margin: 20px;
       }
 
-      /* Heading - Besar, tebal, uppercase */
+      /* Heading - Besar, tebal, uppercase, kontras tinggi */
       h1 {
-        font-size: 3em;
+        font-size: 2.8em;
         font-weight: 700;
-        color: #ff00ff; /* Electric magenta */
+        color: #000000; /* Judul hitam terang */
         margin-bottom: 20px;
         text-transform: uppercase;
         letter-spacing: 2px;
-        border-bottom: 2px solid #00ffff; /* Underline yang kuat */
+        border-bottom: 2px solid #333333; /* Garis bawah abu-abu gelap */
         padding-bottom: 10px;
-        display: inline-block; /* Agar border hanya selebar teks */
+        display: inline-block;
       }
 
       p {
-        font-size: 1.1em;
+        font-size: 1.0em;
         line-height: 1.6;
-        color: #b0b0b0;
+        color: #333333; /* Abu-abu gelap untuk paragraf */
         margin-bottom: 30px;
       }
 
-      /* Textarea - Monokrom, batas jelas */
+      /* Textarea - Kontras, batas jelas */
       textarea {
         display: block;
-        width: calc(100% - 24px); /* Penuh tapi dengan border */
+        width: calc(100% - 24px);
         padding: 10px;
         margin: 20px auto;
-        background-color: #0d0d0d; /* Sangat gelap */
-        border: 2px solid #666666; /* Batas abu-abu tegas */
-        color: #e0e0e0;
+        background-color: #FFFFFF; /* Putih */
+        border: 2px solid #000000; /* Batas hitam tegas */
+        color: #000000; /* Teks input hitam */
         font-family: 'IBM Plex Mono', 'Roboto Mono', monospace;
         font-size: 1em;
         resize: vertical;
-        min-height: 150px;
+        min-height: 120px;
         box-sizing: border-box;
-        outline: none; /* Hapus outline default browser */
+        outline: none;
       }
       textarea:focus {
-        border-color: #00ffff; /* Aksen warna saat fokus */
-        box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.5); /* Outer glow */
+        border-color: #333333; /* Batas abu-abu gelap saat fokus */
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3); /* Outer glow hitam */
       }
 
       /* Button - Blok, kontras tinggi */
       button {
-        background-color: #ff00ff; /* Electric magenta */
-        color: #000000; /* Teks hitam kontras */
-        padding: 15px 40px;
-        border: 2px solid #00ff00; /* Border hijau kuat */
-        font-size: 1.2em;
+        background-color: #000000; /* Tombol hitam */
+        color: #FFFFFF; /* Teks putih kontras */
+        padding: 12px 30px;
+        border: 2px solid #666666; /* Border abu-abu tegas */
+        font-size: 1.1em;
         font-weight: 700;
         text-transform: uppercase;
         cursor: pointer;
         transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-        box-shadow: 4px 4px 0px #00ffff; /* Offset shadow lagi */
-        margin-top: 20px;
+        box-shadow: 4px 4px 0px #999999; /* Shadow abu-abu */
+        margin-top: 15px;
       }
 
       button:hover {
-        background-color: #00ffff; /* Swap warna saat hover */
-        color: #ff00ff;
-        box-shadow: 4px 4px 0px #ff00ff;
+        background-color: #333333; /* Latar abu-abu gelap saat hover */
+        color: #FFFFFF; /* Teks putih saat hover */
+        box-shadow: 4px 4px 0px #000000; /* Shadow hitam saat hover */
       }
 
       button:active {
-        transform: translate(2px, 2px); /* Efek "klik" yang tegas */
-        box-shadow: 2px 2px 0px #00ff00;
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0px #666666;
       }
 
       /* Result Display - Kontras, batas tegas */
       #hasil-prediksi {
         margin-top: 40px;
         padding: 20px;
-        background-color: #2a2a2a; /* Warna background hasil */
-        border: 2px dashed #999999; /* Border putus-putus atau solid */
-        font-size: 1.8em;
+        background-color: #FFFFFF; /* Latar belakang hasil putih */
+        border: 2px solid #000000; /* Border hitam solid */
+        font-size: 1.6em;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 1.5px;
-        min-height: 50px; /* Minimal tinggi */
+        min-height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
-        word-break: break-word; /* Pastikan teks panjang tidak keluar box */
+        word-break: break-word;
       }
 
-      /* Sentiment Specific Colors (diubah untuk brutalism) */
-      /* Sesuaikan warna ini agar tetap kontras dan "keras" */
+      /* Sentiment Specific Colors (diubah total ke kontras hitam/putih/abu-abu) */
+      /* Ini akan memberikan kontras yang kuat, tapi tidak norak.
+         Tetap mempertahankan sedikit aksen warna primer untuk identifikasi emosi. */
       .happy {
-        color: #00ff00; /* Hijau terang */
-        background-color: #2a2a2a;
-        border-color: #00ff00;
+        color: #008000; /* Hijau gelap */
+        background-color: #F8F8F8;
+        border-color: #000000;
       }
       .anger {
-        color: #ff0000; /* Merah menyala */
-        background-color: #2a2a2a;
-        border-color: #ff0000;
+        color: #CC0000; /* Merah gelap */
+        background-color: #F8F8F8;
+        border-color: #000000;
       }
       .fear {
-        color: #ff6600; /* Oranye gelap */
-        background-color: #2a2a2a;
-        border-color: #ff6600;
+        color: #FF8C00; /* Oranye gelap */
+        background-color: #F8F8F8;
+        border-color: #000000;
       }
       .sadness {
-        color: #0000ff; /* Biru terang */
-        background-color: #2a2a2a;
-        border-color: #0000ff;
+        color: #0000CD; /* Biru sedang */
+        background-color: #F8F8F8;
+        border-color: #000000;
       }
       .love {
-        color: #ffff00; /* Kuning terang */
-        background-color: #2a2a2a;
-        border-color: #ffff00;
+        color: #CC9900; /* Kuning keemasan/coklat */
+        background-color: #F8F8F8;
+        border-color: #000000;
       }
       .disgust {
         color: #800080; /* Ungu gelap */
-        background-color: #2a2a2a;
-        border-color: #800080;
+        background-color: #F8F8F8;
+        border-color: #000000;
       }
+      /* Fallback for unknown/neutral/loading */
       .unknown, .neutral {
-        color: #b0b0b0; /* Abu-abu default */
-        background-color: #2a2a2a;
+        color: #000000; /* Teks hitam */
+        background-color: #F0F0F0;
         border-color: #666666;
       }
 
       /* Error Message Styles */
       .error-message {
-        color: #ff0000; /* Merah terang */
+        color: #CC0000; /* Merah gelap untuk error */
         margin-top: 15px;
         font-size: 0.9em;
         font-style: italic;
