@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ANALISIS SENTIMEN BETA!</title>
+    <title>SISTEM ANALISIS SENTIMEN BETA</title>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
       /* Reset dan Global */
@@ -115,46 +115,26 @@
         align-items: center;
         justify-content: center;
         word-break: break-word;
+        /* Gaya khusus untuk emoji */
+        gap: 10px; /* Jarak antara teks dan emoji */
+      }
+      
+      #hasil-prediksi .emoji {
+        font-size: 2em; /* Ukuran emoji */
+        line-height: 1; /* Pastikan emoji tidak membuat tinggi baris aneh */
       }
 
       /* Sentiment Specific Colors (diubah total ke kontras hitam/putih/abu-abu) */
-      /* Ini akan memberikan kontras yang kuat, tapi tidak norak.
-         Tetap mempertahankan sedikit aksen warna primer untuk identifikasi emosi. */
-      .happy {
-        color: #008000; /* Hijau gelap */
-        background-color: #F8F8F8;
-        border-color: #000000;
-      }
-      .anger {
-        color: #CC0000; /* Merah gelap */
-        background-color: #F8F8F8;
-        border-color: #000000;
-      }
-      .fear {
-        color: #FF8C00; /* Oranye gelap */
-        background-color: #F8F8F8;
-        border-color: #000000;
-      }
-      .sadness {
-        color: #0000CD; /* Biru sedang */
-        background-color: #F8F8F8;
-        border-color: #000000;
-      }
-      .love {
-        color: #CC9900; /* Kuning keemasan/coklat */
-        background-color: #F8F8F8;
-        border-color: #000000;
-      }
-      .disgust {
-        color: #800080; /* Ungu gelap */
-        background-color: #F8F8F8;
-        border-color: #000000;
-      }
+      /* Warna utama tetap untuk teks, tapi emoji akan memberi visual utama */
+      .happy { color: #000000; } /* Teks hitam */
+      .anger { color: #000000; }
+      .fear { color: #000000; }
+      .sadness { color: #000000; }
+      .love { color: #000000; }
+      .disgust { color: #000000; }
       /* Fallback for unknown/neutral/loading */
       .unknown, .neutral {
         color: #000000; /* Teks hitam */
-        background-color: #F0F0F0;
-        border-color: #666666;
       }
 
       /* Error Message Styles */
@@ -171,7 +151,7 @@
   <body>
     <div class="container">
       <h1>ANALISIS SENTIMEN TEKS INDONESIA</h1>
-      <p>ALGORITMA PASSIF-AGRESIV KONEKTIVITAS FLASK-VITE.</p>
+      <p>ALGORITMA SVM KONEKTIVITAS FLASK-VITE.</p>
       <p>MASUKKAN DATA UNTUK EVALUASI EMOSI.</p>
       
       <textarea id="teks-input" placeholder="TEKS MENTAH DI SINI. CONTOH: FILM INI SANGAT BAGUS."></textarea>

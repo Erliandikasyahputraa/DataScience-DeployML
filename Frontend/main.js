@@ -4,8 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const hasilPrediksiDiv = document.getElementById('hasil-prediksi');
   const errorMsgDiv = document.getElementById('error-msg');
 
+  // Peta label sentimen ke emoji yang sesuai
+  const sentimentEmojiMap = {
+    'happy': '😊',
+    'anger': '😡',
+    'fear': '😨',
+    'sadness': '😢',
+    'love': '❤️',
+    'disgust': '🤢',
+    'unknown': '❓', // Untuk error atau status awal
+    'neutral': '😐' // Jika ada kasus netral atau tidak terdeteksi
+  };
+
   // Set teks awal saat DOM siap
   hasilPrediksiDiv.textContent = 'PROSES: MENUNGGU DATA';
+  hasilPrediksiDiv.classList.add('unknown'); // Tambahkan kelas default untuk status awal
 
   analisisBtn.addEventListener('click', async () => {
     // Kosongkan pesan error dan hasil sebelumnya
@@ -56,8 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
       // Ambil label sentimen langsung dari respons back-end
       const predictedSentiment = result.prediksi_sentimen; 
 
-      // Tampilkan hasil prediksi
-      hasilPrediksiDiv.textContent = `SENTIMEN: ${predictedSentiment.toUpperCase()}`;
+      // Dapatkan emoji yang sesuai
+      const emoji = sentimentEmojiMap[predictedSentiment.toLowerCase()] || sentimentEmojiMap['unknown'];
+
+      // Tampilkan hasil prediksi: Emoji di samping teks sentimen
+      // Kita bungkus emoji dalam span agar bisa diatur ukurannya via CSS
+      hasilPrediksiDiv.innerHTML = `SENTIMEN: ${predictedSentiment.toUpperCase()} <span class="emoji">${emoji}</span>`;
       
       // Hapus kelas yang ada dan tambahkan kelas baru sesuai sentimen
       hasilPrediksiDiv.className = ''; // Reset semua kelas
