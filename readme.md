@@ -33,9 +33,6 @@ Aplikasi web sederhana untuk analisis sentimen teks berbahasa Indonesia, mampu m
 * [Vanilla JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) - Untuk logika interaksi UI
 * HTML & CSS
 
-## 📁 Struktur Proyek
-
-
 
 ## 📁 Struktur Proyek
 
